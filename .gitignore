@@ -1,3 +1,5 @@
+TF_VAR_proxmox
+
 # Local .terraform directories
 **/.terraform/*
 
