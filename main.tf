@@ -12,7 +12,8 @@ provider "proxmox" {
   pm_api_token_secret = var.PM_API_TOKEN_SECRET
 }
 
-resource "proxmox_lxc" "prd-portainer-traefik" {
+module "proxmox-lxc" {
+  source               = "./modules/lxc"
   arch                 = "amd64"
   bwlimit              = 0
   console              = true
@@ -36,16 +37,11 @@ resource "proxmox_lxc" "prd-portainer-traefik" {
   unprivileged         = true
   start                = true
   cmode                = "tty"
-
-  rootfs {
-    storage   = ""
-    acl       = false
-    quota     = false
-    replicate = false
-    ro        = false
-    shared    = false
-    size      = "300G"
-  }
-
-  timeouts {}
+  rootfs-storage       = ""
+  rootfs-acl           = false
+  rootfs-quota         = false
+  rootfs-replicate     = false
+  rootfs-ro            = false
+  rootfs-shared        = false
+  rootfs-size          = "300G"
 }
