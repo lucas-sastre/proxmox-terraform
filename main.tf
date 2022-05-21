@@ -7,18 +7,36 @@ terraform {
 }
 
 provider "proxmox" {
-  pm_api_url = "https://proxmox.selfhost.ar/api2/json"
+  pm_api_url          = "https://proxmox.selfhost.ar/api2/json"
+  pm_api_token_id     = var.PM_API_TOKEN_ID
+  pm_api_token_secret = var.PM_API_TOKEN_SECRET
 }
 
 resource "proxmox_lxc" "prd-portainer-traefik" {
-  target_node  = "proxmox"
-  hostname     = "prd-portainer-traefik"
-  searchdomain = "1.1.1.1"
-  cores        = 5
-  memory       = 10240
-  onboot       = true
-  swap         = 512
-  unprivileged = true
+  arch                 = "amd64"
+  bwlimit              = 0
+  console              = true
+  cores                = 5
+  cpulimit             = 0
+  cpuunits             = 1024
+  force                = false
+  hostname             = "prd-portainer-traefik"
+  ignore_unpack_errors = false
+  memory               = 10240
+  onboot               = true
+  ostype               = "ubuntu"
+  protection           = false
+  restore              = false
+  searchdomain         = "1.1.1.1"
+  swap                 = 512
+  target_node          = "proxmox"
+  template             = false
+  tty                  = 2
+  unique               = false
+  unprivileged         = true
+  start                = true
+  cmode                = "tty"
+
   rootfs {
     storage   = ""
     acl       = false
@@ -28,4 +46,6 @@ resource "proxmox_lxc" "prd-portainer-traefik" {
     shared    = false
     size      = "300G"
   }
+
+  timeouts {}
 }

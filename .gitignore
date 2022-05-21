@@ -1,4 +1,4 @@
-TF_VAR_proxmox
+terraform.tfvars
 
 # Local .terraform directories
 **/.terraform/*
